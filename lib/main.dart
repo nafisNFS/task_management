@@ -1,20 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management/providers/task_provider.dart';
-import 'package:task_management/screens/home_screen.dart';
+import 'package:get/get.dart';
 
+import 'controllers/weather_controller.dart';
+import 'providers/task_provider.dart';
+import 'screens/home_screen.dart';
 import 'models/task.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Hive.initFlutter();
+  await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
-  runApp(MyApp());
 
+
+  Get.put(WeatherController());
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => TaskProvider()..loadTasks(),
-      child: MaterialApp(
+      child: GetMaterialApp( // Use GetMaterialApp for GetX features
         title: 'Task Manager',
         home: HomeScreen(),
         debugShowCheckedModeBanner: false,

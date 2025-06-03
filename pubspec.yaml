@@ -34,6 +34,9 @@ dependencies:
 
   hive:
   hive_flutter:
+  get:
+  dio:
+  geolocator:
 
   intl:
 
